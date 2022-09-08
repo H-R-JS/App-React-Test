@@ -10,11 +10,11 @@ function useIncrement(initial, step) {
 }
 
 function AutoUseIncrement(initial, step) {
-  const [count, setCount] = useState(initial);
+  const [count, increment] = useIncrement(initial, step);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setCount((c) => c + step);
+      increment();
     }, 1000);
     return function () {
       clearInterval(timer);
@@ -49,8 +49,47 @@ function App() {
         onChange={toggleCompteur}
         checked={compteurVisible}
       ></input>
-      {compteurVisible && <Compteur />}
+      {
+        compteurVisible && (
+          <Compteur />
+        ) /*Si compteurVisible ="true" et que le <Compteur/> s'affiche*/
+      }
+      <TodoList />
     </div>
+  );
+}
+
+function TodoList() {
+  const [todos, setTodos] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(function () {
+    (async function () {
+      console.log("yes");
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/todos?_limit=10"
+      );
+
+      const responseData = await response.json();
+      if (response.ok) {
+        setTodos(responseData);
+      } else {
+        alert(JSON.stringify(responseData));
+      }
+      setLoading(false);
+    })();
+  }, []);
+
+  if (loading) {
+    return "Chargement...";
+  }
+
+  return (
+    <ul>
+      {todos.map((t) => (
+        <li>{t.title}</li>
+      ))}
+    </ul>
   );
 }
 

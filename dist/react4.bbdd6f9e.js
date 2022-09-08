@@ -2904,7 +2904,7 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _reactDom = require("react-dom");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
-var _s = $RefreshSig$(), _s1 = $RefreshSig$(), _s2 = $RefreshSig$(), _s3 = $RefreshSig$();
+var _s = $RefreshSig$(), _s1 = $RefreshSig$(), _s2 = $RefreshSig$(), _s3 = $RefreshSig$(), _s4 = $RefreshSig$();
 function useIncrement(initial, step) {
     _s();
     const [count, setCount] = (0, _react.useState)(initial);
@@ -2919,10 +2919,10 @@ function useIncrement(initial, step) {
 _s(useIncrement, "fas42Yw+PoMJp/kPAuVho9IBnmY=");
 function AutoUseIncrement(initial, step) {
     _s1();
-    const [count, setCount] = (0, _react.useState)(initial);
+    const [count, increment] = useIncrement(initial, step);
     (0, _react.useEffect)(()=>{
         const timer = window.setInterval(()=>{
-            setCount((c)=>c + step);
+            increment();
         }, 1000);
         return function() {
             clearInterval(timer);
@@ -2930,7 +2930,11 @@ function AutoUseIncrement(initial, step) {
     });
     return count;
 }
-_s1(AutoUseIncrement, "/WvhrjsXP4MqDIJJUzbBSROeHW8=");
+_s1(AutoUseIncrement, "YwUXKqInJ8/p1XGwBM1Cx2/ehWQ=", false, function() {
+    return [
+        useIncrement
+    ];
+});
 _c = AutoUseIncrement;
 function useToggle(initialBool = true) {
     _s2();
@@ -2976,8 +2980,13 @@ function App() {
             }, this),
             compteurVisible && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Compteur, {}, void 0, false, {
                 fileName: "src/react41.jsx",
-                lineNumber: 52,
-                columnNumber: 27
+                lineNumber: 54,
+                columnNumber: 11
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(TodoList, {}, void 0, false, {
+                fileName: "src/react41.jsx",
+                lineNumber: 57,
+                columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
@@ -2992,21 +3001,53 @@ _s3(App, "tc/KUIhprF0mHX/p/ReSBDbjcKo=", false, function() {
     ];
 });
 _c2 = App;
+function TodoList() {
+    _s4();
+    const [todos, setTodos] = (0, _react.useState)([]);
+    const [loading, setLoading] = (0, _react.useState)(true);
+    (0, _react.useEffect)(function() {
+        (async function() {
+            console.log("yes");
+            const response = await fetch("https://jsonplaceholder.typicode.com/todos?_limit=10");
+            const responseData = await response.json();
+            if (response.ok) setTodos(responseData);
+            else alert(JSON.stringify(responseData));
+            setLoading(false);
+        })();
+    }, []);
+    if (loading) return "Chargement...";
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ul", {
+        children: todos.map((t)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                children: t.title
+            }, void 0, false, {
+                fileName: "src/react41.jsx",
+                lineNumber: 90,
+                columnNumber: 9
+            }, this))
+    }, void 0, false, {
+        fileName: "src/react41.jsx",
+        lineNumber: 88,
+        columnNumber: 5
+    }, this);
+}
+_s4(TodoList, "Q+SulLHKuBZzk+ag3OV6DHBynQg=");
+_c3 = TodoList;
 (0, _reactDom.render)(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
     children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(App, {}, void 0, false, {
         fileName: "src/react41.jsx",
-        lineNumber: 59,
+        lineNumber: 98,
         columnNumber: 5
     }, undefined)
 }, void 0, false, {
     fileName: "src/react41.jsx",
-    lineNumber: 58,
+    lineNumber: 97,
     columnNumber: 3
 }, undefined), document.querySelector(".app"));
-var _c, _c1, _c2;
+var _c, _c1, _c2, _c3;
 $RefreshReg$(_c, "AutoUseIncrement");
 $RefreshReg$(_c1, "Compteur");
 $RefreshReg$(_c2, "App");
+$RefreshReg$(_c3, "TodoList");
 
   $parcel$ReactRefreshHelpers$5906.postlude(module);
 } finally {
