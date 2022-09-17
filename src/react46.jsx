@@ -1,7 +1,7 @@
 import { render } from "react-dom";
-import React from "react";
+import React, { useState, useMemo, useCallback, useContext } from "react";
 
-const theme = {
+const THEMES = {
   dark: {
     background: "#000",
     color: "#FFF",
@@ -14,13 +14,16 @@ const theme = {
   },
 };
 
-const ThemeContext = React.createContext(theme.dark);
+const ThemeContext = React.createContext({
+  theme: THEMES.dark,
+  toggleTheme: () => {},
+});
 
 function SearchForm() {
   return (
     <div>
       <input />
-      <ThemedButton>Recherche</ThemedButton>
+      <ThemedButtonClass>Recherche</ThemedButtonClass>
     </div>
   );
 }
@@ -35,26 +38,55 @@ function Toolbar() {
 }
 
 function ThemedButton({ children }) {
-  return (
-    <ThemeContext.Consumer>
+  const { theme } = useContext(ThemeContext);
+  return <button style={theme}>{children}</button>;
+  /* OU
+  return(
+  <ThemeContext.Consumer>
       {(value) => {
         return <button style={value}>{children}</button>;
       }}
-    </ThemeContext.Consumer>
-  );
-  /* OU
-  const value = useContext(ThemeContext)
-  return <button style={value}>{children}</button>*/
+    </ThemeContext.Consumer>);*/
 }
 
+class ThemedButtonClass extends React.Component {
+  render() {
+    const { children } = this.props;
+    const { theme } = this.context;
+    return <button style={theme}>{children}</button>;
+  }
+}
+ThemedButtonClass.contextType = ThemeContext; /// Créer la propriété "this.context"
+
 function App() {
+  const [theme, setTheme] = useState("light");
+  const toggleTheme = useCallback(function () {
+    setTheme((t) => (t === "light" ? "dark" : "light")); /// permet de changer entre dark et light
+  }, []);
+
+  const value = useMemo(
+    function () {
+      return {
+        theme: theme === "light" ? THEMES.light : THEMES.dark,
+        toggleTheme,
+      };
+    },
+    [toggleTheme, theme]
+  );
+
   return (
     <div>
-      <ThemeContext.Provider value={theme.light}>
+      <ThemeContext.Provider value={value}>
         <Toolbar />
+        <ThemeSwitcher />
       </ThemeContext.Provider>
     </div>
   );
+}
+
+function ThemeSwitcher() {
+  const { toggleTheme } = useContext(ThemeContext);
+  return <button onClick={toggleTheme}>Changer le theme</button>;
 }
 
 render(<App />, document.querySelector(".app"));

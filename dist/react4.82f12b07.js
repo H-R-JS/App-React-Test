@@ -2904,7 +2904,8 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _reactDom = require("react-dom");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
-const theme = {
+var _s = $RefreshSig$(), _s1 = $RefreshSig$(), _s2 = $RefreshSig$();
+const THEMES = {
     dark: {
         background: "#000",
         color: "#FFF",
@@ -2916,26 +2917,29 @@ const theme = {
         border: "solid 1px #000"
     }
 };
-const ThemeContext = /*#__PURE__*/ (0, _reactDefault.default).createContext(theme.dark);
+const ThemeContext = /*#__PURE__*/ (0, _reactDefault.default).createContext({
+    theme: THEMES.dark,
+    toggleTheme: ()=>{}
+});
 function SearchForm() {
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {}, void 0, false, {
                 fileName: "src/react46.jsx",
-                lineNumber: 22,
+                lineNumber: 25,
                 columnNumber: 7
             }, this),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(ThemedButton, {
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(ThemedButtonClass, {
                 children: "Recherche"
             }, void 0, false, {
                 fileName: "src/react46.jsx",
-                lineNumber: 23,
+                lineNumber: 26,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/react46.jsx",
-        lineNumber: 21,
+        lineNumber: 24,
         columnNumber: 5
     }, this);
 }
@@ -2945,76 +2949,127 @@ function Toolbar() {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(SearchForm, {}, void 0, false, {
                 fileName: "src/react46.jsx",
-                lineNumber: 31,
+                lineNumber: 34,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(ThemedButton, {
                 children: "M'inscrire"
             }, void 0, false, {
                 fileName: "src/react46.jsx",
-                lineNumber: 32,
+                lineNumber: 35,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/react46.jsx",
-        lineNumber: 30,
+        lineNumber: 33,
         columnNumber: 5
     }, this);
 }
 _c1 = Toolbar;
 function ThemedButton({ children  }) {
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(ThemeContext.Consumer, {
-        children: (value)=>{
-            return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                style: value,
-                children: children
-            }, void 0, false, {
-                fileName: "src/react46.jsx",
-                lineNumber: 41,
-                columnNumber: 16
-            }, this);
-        }
+    _s();
+    const { theme  } = (0, _react.useContext)(ThemeContext);
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+        style: theme,
+        children: children
     }, void 0, false, {
         fileName: "src/react46.jsx",
-        lineNumber: 39,
-        columnNumber: 5
+        lineNumber: 42,
+        columnNumber: 10
     }, this);
 /* OU
-  const value = useContext(ThemeContext)
-  return <button style={value}>{children}</button>*/ }
+  return(
+  <ThemeContext.Consumer>
+      {(value) => {
+        return <button style={value}>{children}</button>;
+      }}
+    </ThemeContext.Consumer>);*/ }
+_s(ThemedButton, "LidUGjXGvl6nqLnPI8yC77ot4bM=");
 _c2 = ThemedButton;
-function App() {
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(ThemeContext.Provider, {
-            value: theme.light,
-            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Toolbar, {}, void 0, false, {
-                fileName: "src/react46.jsx",
-                lineNumber: 54,
-                columnNumber: 9
-            }, this)
+class ThemedButtonClass extends (0, _reactDefault.default).Component {
+    render() {
+        const { children  } = this.props;
+        const { theme  } = this.context;
+        return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+            style: theme,
+            children: children
         }, void 0, false, {
             fileName: "src/react46.jsx",
-            lineNumber: 53,
+            lineNumber: 56,
+            columnNumber: 12
+        }, this);
+    }
+}
+ThemedButtonClass.contextType = ThemeContext; /// Créer la propriété "this.context"
+function App() {
+    _s1();
+    const [theme, setTheme] = (0, _react.useState)("light");
+    const toggleTheme = (0, _react.useCallback)(function() {
+        setTheme((t)=>t === "light" ? "dark" : "light"); /// permet de changer entre dark et light
+    }, []);
+    const value = (0, _react.useMemo)(function() {
+        return {
+            theme: theme === "light" ? THEMES.light : THEMES.dark,
+            toggleTheme
+        };
+    }, [
+        toggleTheme,
+        theme
+    ]);
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(ThemeContext.Provider, {
+            value: value,
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Toolbar, {}, void 0, false, {
+                    fileName: "src/react46.jsx",
+                    lineNumber: 80,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(ThemeSwitcher, {}, void 0, false, {
+                    fileName: "src/react46.jsx",
+                    lineNumber: 81,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "src/react46.jsx",
+            lineNumber: 79,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "src/react46.jsx",
-        lineNumber: 52,
+        lineNumber: 78,
         columnNumber: 5
     }, this);
 }
+_s1(App, "eecNpxfaQM9shZqnCIyQ7AR3I+k=");
 _c3 = App;
+function ThemeSwitcher() {
+    _s2();
+    const { toggleTheme  } = (0, _react.useContext)(ThemeContext);
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+        onClick: toggleTheme,
+        children: "Changer le theme"
+    }, void 0, false, {
+        fileName: "src/react46.jsx",
+        lineNumber: 89,
+        columnNumber: 10
+    }, this);
+}
+_s2(ThemeSwitcher, "ecry3kS0GsAsFSW6O5o/zzhulYE=");
+_c4 = ThemeSwitcher;
 (0, _reactDom.render)(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(App, {}, void 0, false, {
     fileName: "src/react46.jsx",
-    lineNumber: 60,
+    lineNumber: 92,
     columnNumber: 8
 }, undefined), document.querySelector(".app"));
-var _c, _c1, _c2, _c3;
+var _c, _c1, _c2, _c3, _c4;
 $RefreshReg$(_c, "SearchForm");
 $RefreshReg$(_c1, "Toolbar");
 $RefreshReg$(_c2, "ThemedButton");
 $RefreshReg$(_c3, "App");
+$RefreshReg$(_c4, "ThemeSwitcher");
 
   $parcel$ReactRefreshHelpers$6add.postlude(module);
 } finally {
