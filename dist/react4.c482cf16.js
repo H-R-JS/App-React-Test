@@ -2904,33 +2904,61 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _reactDom = require("react-dom");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
-var _s = $RefreshSig$(), _s1 = $RefreshSig$();
-const FormContextContext = createContext({});
-function FormContext({ defaultValue , onSubmit , children  }) {
+var _s = $RefreshSig$(), _s1 = $RefreshSig$(), _s2 = $RefreshSig$();
+const FormContext = /*#__PURE__*/ (0, _react.createContext)({});
+function FormWithContext({ defaultValue , onSubmit , children  }) {
     _s();
     const [data, setData] = (0, _react.useState)(defaultValue);
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(FormContextContext.Provider, {
+    const change = (0, _react.useCallback)(function(name, value) {
+        setData((d)=>Object.assign({}, d, {
+                [name]: value
+            }));
+    });
+    const value = (0, _react.useMemo)(function() {
+        return Object.assign({}, data, {
+            change: change
+        });
+    }, [
+        data,
+        change
+    ]); /// on reprend tous ce que l'on veut transmettre au provider pour l'utiliser
+    const handleSubmit = (0, _react.useCallback)(function(e) {
+        e.preventDefault();
+        onSubmit(value);
+    }, [
+        onSubmit,
+        value
+    ]);
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(FormContext.Provider, {
         value: value,
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
-                onSubmit: onSubmit,
+                onSubmit: handleSubmit,
                 children: children
             }, void 0, false, {
                 fileName: "src/react47.jsx",
-                lineNumber: 11,
+                lineNumber: 34,
                 columnNumber: 7
             }, this),
-            ";"
+            ";",
+            JSON.stringify(value)
         ]
     }, void 0, true, {
         fileName: "src/react47.jsx",
-        lineNumber: 10,
+        lineNumber: 33,
         columnNumber: 5
     }, this);
 }
-_s(FormContext, "F6GarE/FRezoOWSbU78VQtVjBKI=");
-_c = FormContext;
+_s(FormWithContext, "zcSpLApSDQpOJmv/gQBp+x+/d4w=");
+_c = FormWithContext;
 function Formfield({ name , children  }) {
+    _s1();
+    const data = (0, _react.useContext)(FormContext);
+    const handleChange = (0, _react.useCallback)(function(e) {
+        data.change(e.target.name, e.target.value);
+    }, [
+        data.change
+    ]);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         className: "form-group",
         children: [
@@ -2939,26 +2967,29 @@ function Formfield({ name , children  }) {
                 children: children
             }, void 0, false, {
                 fileName: "src/react47.jsx",
-                lineNumber: 19,
+                lineNumber: 49,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                 type: "text",
                 name: name,
                 id: name,
-                className: "form-control"
+                className: "form-control",
+                value: data[name] || "",
+                onChange: handleChange
             }, void 0, false, {
                 fileName: "src/react47.jsx",
-                lineNumber: 20,
+                lineNumber: 50,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/react47.jsx",
-        lineNumber: 18,
+        lineNumber: 48,
         columnNumber: 5
     }, this);
 }
+_s1(Formfield, "tGmW57QiwvUebSmqcwiVuBnAlpk=");
 _c1 = Formfield;
 function PrimaryButton({ children  }) {
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -2966,19 +2997,19 @@ function PrimaryButton({ children  }) {
         children: children
     }, void 0, false, {
         fileName: "src/react47.jsx",
-        lineNumber: 26,
+        lineNumber: 63,
         columnNumber: 10
     }, this);
 }
 _c2 = PrimaryButton;
 function App() {
-    _s1();
-    const handleSubmit = (0, _react.useCallback)(function(value1) {
-        console.log(value1);
+    _s2();
+    const handleSubmit = (0, _react.useCallback)(function(value) {
+        console.log(value);
     }, []);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         className: "container",
-        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(FormContext, {
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(FormWithContext, {
             defaultValue: {
                 name: "Doe",
                 firstname: "John"
@@ -2990,7 +3021,7 @@ function App() {
                     children: "Nom"
                 }, void 0, false, {
                     fileName: "src/react47.jsx",
-                    lineNumber: 40,
+                    lineNumber: 77,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Formfield, {
@@ -2998,37 +3029,37 @@ function App() {
                     children: "Pr\xe9nom"
                 }, void 0, false, {
                     fileName: "src/react47.jsx",
-                    lineNumber: 41,
+                    lineNumber: 78,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(PrimaryButton, {
                     children: "Envoyer"
                 }, void 0, false, {
                     fileName: "src/react47.jsx",
-                    lineNumber: 42,
+                    lineNumber: 79,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "src/react47.jsx",
-            lineNumber: 36,
+            lineNumber: 73,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "src/react47.jsx",
-        lineNumber: 35,
+        lineNumber: 72,
         columnNumber: 5
     }, this);
 }
-_s1(App, "tzNB2ES70+wfA7yeR5/qpxBoorU=");
+_s2(App, "tzNB2ES70+wfA7yeR5/qpxBoorU=");
 _c3 = App;
 (0, _reactDom.render)(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(App, {}, void 0, false, {
     fileName: "src/react47.jsx",
-    lineNumber: 48,
+    lineNumber: 85,
     columnNumber: 8
 }, undefined), document.querySelector(".app"));
 var _c, _c1, _c2, _c3;
-$RefreshReg$(_c, "FormContext");
+$RefreshReg$(_c, "FormWithContext");
 $RefreshReg$(_c1, "Formfield");
 $RefreshReg$(_c2, "PrimaryButton");
 $RefreshReg$(_c3, "App");
