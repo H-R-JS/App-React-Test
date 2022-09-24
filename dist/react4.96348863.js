@@ -2905,36 +2905,75 @@ var _reactDom = require("react-dom");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _tabsExport = require("./TabsExport");
+class ErrorBoundary extends (0, _reactDefault.default).Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            error: false
+        };
+    }
+    static getDerivedStateFromError(error) {
+        return {
+            error: true
+        };
+    }
+    componentDidCatch(error, errorInfo) {
+        console.log(error, errorInfo);
+    }
+    render() {
+        if (this.state.error) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            className: "alert alert-danger",
+            children: "Il y a une un probl\xe8me !"
+        }, void 0, false, {
+            fileName: "src/TabsReact.js",
+            lineNumber: 21,
+            columnNumber: 14
+        }, this);
+        return this.props.children;
+    }
+}
 function App() {
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _tabsExport.Tabs), {
-        children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _tabsExport.Tab), {
-                title: "Premier onglet",
-                children: "C'est le premier onglet d'une grande s\xe9rie ou pas."
-            }, void 0, false, {
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(ErrorBoundary, {
+            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _tabsExport.Tabs), {
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _tabsExport.Tab), {
+                        title: "Premier onglet",
+                        children: "C'est le premier onglet d'une grande s\xe9rie ou pas."
+                    }, void 0, false, {
+                        fileName: "src/TabsReact.js",
+                        lineNumber: 32,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _tabsExport.Tab), {
+                        title: "Second onglet",
+                        children: "Le deuxi\xe8me est tout aussi tr\xe9pidente que la premi\xe8re, mais en moins bien, lel"
+                    }, void 0, false, {
+                        fileName: "src/TabsReact.js",
+                        lineNumber: 35,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
                 fileName: "src/TabsReact.js",
-                lineNumber: 8,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _tabsExport.Tab), {
-                title: "Second onglet",
-                children: "Le deuxi\xe8me est tout aussi tr\xe9pidente que la premi\xe8re, mais en moins bien, lel"
-            }, void 0, false, {
-                fileName: "src/TabsReact.js",
-                lineNumber: 11,
-                columnNumber: 7
+                lineNumber: 31,
+                columnNumber: 9
             }, this)
-        ]
-    }, void 0, true, {
+        }, void 0, false, {
+            fileName: "src/TabsReact.js",
+            lineNumber: 30,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
         fileName: "src/TabsReact.js",
-        lineNumber: 7,
+        lineNumber: 29,
         columnNumber: 5
     }, this);
 }
 _c = App;
 (0, _reactDom.render)(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(App, {}, void 0, false, {
     fileName: "src/TabsReact.js",
-    lineNumber: 19,
+    lineNumber: 45,
     columnNumber: 8
 }, undefined), document.querySelector(".app"));
 var _c;
@@ -27153,7 +27192,7 @@ $RefreshReg$(_c1, "Tab");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","react":"21dqq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react/jsx-dev-runtime":"iTorj"}],"gkKU3":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
