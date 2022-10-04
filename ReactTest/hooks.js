@@ -5,7 +5,7 @@ export function useToggle(initial) {
   return [
     state,
     function () {
-      setState((state) => !state);
+      setState((state) => !state); // pour que le changement de valeur dans les test, marche correctement ( on retourne un callback qui change la valeur de l'état)
     },
   ];
 }
